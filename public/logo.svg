@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 米色圆角背景 -->
+  <rect width="512" height="512" rx="120" fill="#f7f2ea"/>
+
+  <!-- 绿色浏览器窗口主体 -->
+  <rect x="64" y="148" width="384" height="268" rx="20" fill="#2f5d3f"/>
+
+  <!-- 绿色标签页突起（左上角 tab） -->
+  <path d="M64,148 L64,104 Q64,78 90,78 L216,78 Q244,78 244,104 L244,148 Z" fill="#2f5d3f"/>
+
+  <!-- 标题栏底线 -->
+  <rect x="64" y="188" width="384" height="1.5" fill="rgba(0,0,0,0.15)"/>
+
+  <!-- 三个交通灯圆点 -->
+  <circle cx="102" cy="168" r="8" fill="rgba(255,255,255,0.25)"/>
+  <circle cx="126" cy="168" r="8" fill="rgba(255,255,255,0.25)"/>
+  <circle cx="150" cy="168" r="8" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- 白色大 X（Page Killer） -->
+  <line x1="156" y1="218" x2="356" y2="386" stroke="#f7f2ea" stroke-width="52" stroke-linecap="round"/>
+  <line x1="356" y1="218" x2="156" y2="386" stroke="#f7f2ea" stroke-width="52" stroke-linecap="round"/>
+</svg>
