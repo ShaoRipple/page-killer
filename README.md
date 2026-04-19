@@ -4,8 +4,6 @@
 
 > 替换 Chrome 新标签页，按 domain 自动分组管理已打开的 tab，一键清理多余页面。
 
-![logo](public/logo.svg)
-
 ## 功能特性
 
 - **Domain 自动分组** — 所有打开的 tab 按域名实时归类，无需手动整理
