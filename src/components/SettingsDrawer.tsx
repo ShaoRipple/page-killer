@@ -3,7 +3,7 @@ import { tr, type Lang } from "../i18n";
 import type { Settings } from "../useSettings";
 
 const VERSION = "0.1.0";
-const GITHUB_URL = "https://github.com/novin-shao/page-killer";
+const GITHUB_URL = "https://github.com/Kar-98/page-killer";
 
 interface Props {
   open: boolean;
