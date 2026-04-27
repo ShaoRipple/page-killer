@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Page Killer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "替换 Chrome 新标签页，按 domain 自动分组管理已打开的 tab。",
   "permissions": ["tabs", "bookmarks", "storage"],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
-  }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw1ZlCmbxAU+1t+R9m1w8HUX0VNNQsNw2TrWqL5nRPhKQmXJdKGNTLLkv1JEeq5aLxV8pQJ8TqFYP2pLVFJJNM7vN1GCrSYq8XvWzZFSQJ7YNlqO2rL7xdMYzPYzLBW7nQzQXq9zJnH6XL8vQz4f3n9mVQzJqHq3XzVFZYqL9WqD9YQz4vJYq4qL7XvK5W3M9L5Q8zQzJ5R7zQvM5N7S8U8X9Z9bVWQ8q6Y9cXX0zN5S7zQvN5N7S8U8X9Z9bVWQ8q6Y9cXX0zN5S7zQvN5N7S8U8X9Z9bVWQ8q6Y9cXX0zN5S7zQvN5N7S8U8X9Z9bVWQ8q6Y9cXX0zN5S7zQvN5N7S8U8X9Z9bVWQ=="
 }
