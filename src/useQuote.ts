@@ -16,7 +16,7 @@ interface QuoteState {
 }
 
 const KEY = "quote_state";
-const QUOTES_VERSION = "2026-04-19-philosophical-50";
+const QUOTES_VERSION = "2026-04-27-philosophical-updated";
 
 function todayKey(): string {
   const d = new Date();
