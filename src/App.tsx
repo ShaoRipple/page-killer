@@ -154,44 +154,40 @@ export function App() {
           } : null}
         />
 
-        <div className="main-columns">
-          <section className="section main-columns__primary">
-            <div className="section__header">
-              <h2 className="section__title">{openTabsTitle}</h2>
-              {!loading && totalTabs > 0 && (
-                <div className="section__meta">
-                  <span>{domainsCountCopy}</span>
-                  <button
-                    type="button"
-                    className="btn-pill btn-pill--danger"
-                    onClick={handleCloseAll}
-                  >
-                    {closeAllCopy}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {loading ? (
-              <Skeleton />
-            ) : groups.length === 0 ? (
-              <EmptyState lang={lang} />
-            ) : (
-              <DomainGrid
-                groups={groups}
-                onSave={handleSave}
-                onClose={handleClose}
-                cyberEnabled={settings.cyberEffects}
-                trashSound={settings.trashSound}
-                lang={lang}
-              />
+        <section className="section section--primary">
+          <div className="section__header">
+            <h2 className="section__title">{openTabsTitle}</h2>
+            {!loading && totalTabs > 0 && (
+              <div className="section__meta">
+                <span>{domainsCountCopy}</span>
+                <button
+                  type="button"
+                  className="btn-pill btn-pill--danger"
+                  onClick={handleCloseAll}
+                >
+                  {closeAllCopy}
+                </button>
+              </div>
             )}
-          </section>
-
-          <div className="main-columns__sidebar">
-            <SavedSection lang={lang} cyberEnabled={settings.cyberEffects} trashSound={settings.trashSound} />
           </div>
-        </div>
+
+          {loading ? (
+            <Skeleton />
+          ) : groups.length === 0 ? (
+            <EmptyState lang={lang} />
+          ) : (
+            <DomainGrid
+              groups={groups}
+              onSave={handleSave}
+              onClose={handleClose}
+              cyberEnabled={settings.cyberEffects}
+              trashSound={settings.trashSound}
+              lang={lang}
+            />
+          )}
+        </section>
+
+        <SavedSection lang={lang} cyberEnabled={settings.cyberEffects} trashSound={settings.trashSound} />
 
         <button
           type="button"

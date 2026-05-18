@@ -207,25 +207,39 @@ function DomainCard({ group, onSave, onClose, cyberEnabled, trashSound, lang }: 
   const friendly = friendlyName(group.hostname, group.hostname);
   const displayName = hostDisplayName(group.hostname, friendly);
 
-  const countLabel = `${group.tabs.length} page${group.tabs.length > 1 ? "s" : ""}`;
-  const closeAllLabel = `Kill ${group.tabs.length} page${group.tabs.length > 1 ? "s" : ""}`;
+  const count = group.tabs.length;
+  const countLabel = `${count} page${count > 1 ? "s" : ""}`;
+  const closeAllLabel = `Kill ${count} page${count > 1 ? "s" : ""}`;
   const closeDupLabel = `Kill ${dupExtraCount} dupe${dupExtraCount > 1 ? "s" : ""}`;
+
+  // 取第一个有 favicon 的 tab
+  const domainFavicon = group.tabs.find(t => t.favIconUrl)?.favIconUrl;
+
+  // 角标颜色区间：(1,3]绿 (3,5]黄 >5红
+  const countColorClass = count <= 3 ? "card__count--green" : count <= 5 ? "card__count--yellow" : "card__count--red";
 
   return (
     <article
       ref={cardRef}
-      className={`card card--${Math.min(rows.length, 6)}${hasDups ? " card--has-dups" : ""}${shattering ? " card--shatter" : ""}`}
+      className={`card card--${Math.min(rows.length, 6)}${hasDups ? " card--has-dups card--blink" : ""}${shattering ? " card--shatter" : ""}`}
     >
       <CardFirework origin={firework} onDone={() => setFirework(null)} />
       <header className="card__head">
+        <Favicon
+          src={domainFavicon}
+          fallbackColor={group.fallbackColor}
+          fallbackLetter={group.fallbackLetter}
+          variant="card"
+        />
         <h3 className="card__title" title={group.hostname}>
           {displayName}
         </h3>
-        <span className="card__count">
-          <span className="card__count-icon">📄</span>
-          {countLabel}
-          {hasDups && <span className="card__dup-pill">{dupExtraCount} dupe{dupExtraCount > 1 ? "s" : ""}</span>}
-        </span>
+        {count > 1 && (
+          <span className={`card__count ${countColorClass}`}>
+            {countLabel}
+          </span>
+        )}
+        {hasDups && <span className="card__dup-pill">{dupExtraCount} dupe{dupExtraCount > 1 ? "s" : ""}</span>}
       </header>
 
       <ul className="card__list">

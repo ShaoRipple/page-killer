@@ -28,7 +28,7 @@ function Favicon({
     return (
       <div
         className="card__logo-fallback"
-        style={{ background: fallbackColor, width: 16, height: 16, fontSize: 9 }}
+        style={{ background: fallbackColor, width: 18, height: 18, fontSize: 10, marginTop: 2 }}
       >
         {fallbackLetter}
       </div>
@@ -73,7 +73,7 @@ function SavedRow({ item, onRemove, cyberEnabled, trashSound, lang }: SavedItemR
         fallbackLetter={letterFor(host || item.url)}
       />
       <div className="saved-item__main">
-        <div className="saved-item__title" title={item.title}>
+        <div className="saved-item__title">
           {item.title}
         </div>
         <div className="saved-item__meta">
@@ -84,7 +84,7 @@ function SavedRow({ item, onRemove, cyberEnabled, trashSound, lang }: SavedItemR
       </div>
       <button
         type="button"
-        className="tab-item__btn tab-item__close"
+        className="tab-item__btn tab-item__close saved-item__close"
         aria-label={lang === "en" ? "Remove" : "移除"}
         onClick={handleRemove}
       >
@@ -132,7 +132,7 @@ export function SavedSection({ lang, cyberEnabled, trashSound }: Props) {
       : "这里会安放你想稍后再看的网页。";
 
   return (
-    <section className="section">
+    <section className="section section--saved">
       <CardFirework origin={firework} onDone={() => setFirework(null)} />
       <div className="section__header">
         <h2 className="section__title">{title}</h2>
@@ -153,7 +153,6 @@ export function SavedSection({ lang, cyberEnabled, trashSound }: Props) {
 
       {saved.length === 0 ? (
         <div className="empty empty--sidebar">
-          <img src="/empty-saved.png" alt="" className="empty__illustration" />
           <div>{emptyCopy}</div>
         </div>
       ) : (

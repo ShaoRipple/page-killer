@@ -166,17 +166,24 @@ a:hover {
 
 .section__title {
   font-family: var(--serif);
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
   margin: 0;
   letter-spacing: 0.01em;
+}
+
+/* 稍后再看区块 */
+.section--saved {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
 }
 
 .section__meta {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-dim);
 }
 
@@ -185,9 +192,9 @@ a:hover {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 5px 12px;
+  padding: 7px 16px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -291,14 +298,8 @@ a:hover {
 .grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   align-items: start;
-}
-
-@media (max-width: 1439px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 @media (max-width: 1199px) {
@@ -336,10 +337,10 @@ a:hover {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px 16px 16px;
+  padding: 22px 20px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   position: relative;
   overflow: visible;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
@@ -389,6 +390,23 @@ a:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
+@keyframes card-blink {
+  0%, 100% {
+    border-color: var(--danger);
+    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.10), inset 0 1px 0 rgba(255,255,255,0.85);
+    background: var(--surface);
+  }
+  50% {
+    border-color: rgba(230, 57, 70, 0.9);
+    box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.15), 0 2px 12px rgba(230, 57, 70, 0.25), inset 0 1px 0 rgba(255,255,255,0.85);
+    background: #fff0f0;
+  }
+}
+
+.card--blink {
+  animation: card-in 300ms ease-out both, card-blink 1.4s ease-in-out 350ms infinite;
+}
+
 .card__head {
   display: flex;
   align-items: center;
@@ -397,7 +415,7 @@ a:hover {
 
 .card__title {
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   margin: 0;
   flex: 1;
@@ -409,10 +427,9 @@ a:hover {
 }
 
 .card__count {
-  font-size: 11px;
-  color: var(--text-dim);
-  background: var(--bg);
-  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
   border-radius: 999px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -421,37 +438,48 @@ a:hover {
   gap: 4px;
 }
 
-.card__count-icon {
-  font-size: 13px;
-  opacity: 0.7;
+.card__count--green {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.card__count--yellow {
+  background: #fff8e1;
+  color: #e6a817;
+}
+
+.card__count--red {
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .card__dup-pill {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--danger);
   background: var(--danger-soft);
-  padding: 3px 8px;
+  padding: 3px 10px;
   border-radius: 999px;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 /* 卡片头部 domain favicon / 字母占位 */
 .card__logo {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   flex-shrink: 0;
   object-fit: contain;
 }
 
 .card__logo-fallback {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   display: grid;
   place-items: center;
   color: rgba(255, 255, 255, 0.93);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   flex-shrink: 0;
   letter-spacing: 0;
@@ -468,8 +496,8 @@ a:hover {
 }
 
 .card__footer .btn-pill {
-  font-size: 12px;
-  padding: 4px 10px;
+  font-size: 13px;
+  padding: 6px 14px;
 }
 
 .card__list {
@@ -484,9 +512,9 @@ a:hover {
 .tab-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 6px;
-  border-radius: 6px;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 120ms;
   min-width: 0;
@@ -497,33 +525,30 @@ a:hover {
 }
 
 .tab-item__favicon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
 .tab-item__title {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--text);
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   flex: 1;
   min-width: 0;
-  line-height: 1.4;
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .tab-item__btn {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   display: grid;
   place-items: center;
-  border-radius: 5px;
+  border-radius: 6px;
   color: var(--accent);
   transition: background 120ms, color 120ms;
   flex-shrink: 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   opacity: 1;
   font-weight: 600;
@@ -578,8 +603,13 @@ a:hover {
 }
 
 .empty--sidebar {
-  min-height: 360px;
-  padding: 0 8px;
+  min-height: 60px;
+  padding: 0;
+  font-size: 15px;
+  color: var(--text-dim);
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
 }
 
 .empty__mark {
@@ -597,7 +627,7 @@ a:hover {
 .skeleton {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .skeleton__card {
@@ -670,35 +700,48 @@ a:hover {
   }
 }
 
-/* ---------- Saved 列表 ---------- */
+/* ---------- Saved 列表（卡片式，与当前打开对齐） ---------- */
 .saved-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1199px) {
+  .saved-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 899px) {
+  .saved-list { grid-template-columns: 1fr; }
 }
 
 .saved-item {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 18px;
   cursor: pointer;
-  transition: background 120ms;
-  border-top: 1px solid var(--border);
-}
-
-.saved-item:first-child {
-  border-top: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.07),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .saved-item:hover {
-  background: var(--bg);
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  border-color: rgba(42, 38, 32, 0.14);
 }
 
 .saved-item__main {
@@ -706,18 +749,18 @@ a:hover {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .saved-item__title {
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .saved-item__meta {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-dim);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -960,35 +1003,8 @@ a:hover {
 }
 
 /* ---------- 主体双列布局 ---------- */
-.main-columns {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
+.section--primary {
   margin-top: 40px;
-}
-
-.main-columns__primary {
-  flex: 1;
-  min-width: 0;
-  margin-top: 0;
-}
-
-.main-columns__sidebar {
-  width: 280px;
-  flex-shrink: 0;
-}
-
-.main-columns .section {
-  margin-top: 0;
-}
-
-@media (max-width: 899px) {
-  .main-columns {
-    flex-direction: column;
-  }
-  .main-columns__sidebar {
-    width: 100%;
-  }
 }
 
 /* ---------- 设置入口（右下角图标） ---------- */
