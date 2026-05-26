@@ -96,10 +96,28 @@ export const t = {
   author: { zh: "作者", en: "Author" },
   collapse: { zh: "收起", en: "Collapse" },
   quote_none: { zh: "", en: "" },
+  kill_all: { zh: "全部关闭", en: "Kill All" },
+  dismiss: { zh: "忽略", en: "Dismiss" },
+  less: { zh: "收起", en: "Less" },
+  n_pages: { zh: "{n} 个页面", en: "{n} page{plural}" },
+  n_dupes: { zh: "{n} 个重复", en: "{n} dupe{plural}" },
+  n_items: { zh: "{n} 项", en: "{n} item{plural}" },
+  kill_n_pages: { zh: "关闭 {n} 个页面", en: "Kill {n} page{plural}" },
+  kill_n_dupes: { zh: "关闭 {n} 个重复", en: "Kill {n} dupe{plural}" },
+  kill_n: { zh: "关闭 {n} 个", en: "Kill {n}" },
+  show_n_more: { zh: "展开剩余 {n} 项", en: "Show {n} more" },
+  killed_n: { zh: "已关闭 {n} 个页面", en: "Killed {n} page{plural}" },
 };
 
 export type Key = keyof typeof t;
 
 export function tr(key: Key, lang: Lang): string {
   return t[key][lang];
+}
+
+export function trp(key: Key, lang: Lang, n: number): string {
+  const template = t[key][lang];
+  return template
+    .replace("{n}", String(n))
+    .replace("{plural}", n > 1 ? "s" : "");
 }

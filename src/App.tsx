@@ -4,7 +4,7 @@ import { useTabs, closeTabs, saveTab } from "./useTabs";
 import { useSettings } from "./useSettings";
 import { useQuote } from "./useQuote";
 import { clearSaved } from "./saved";
-import { tr } from "./i18n";
+import { tr, trp } from "./i18n";
 import { Header } from "./components/Header";
 import { DomainGrid } from "./components/DomainGrid";
 import { EmptyState } from "./components/EmptyState";
@@ -31,11 +31,10 @@ interface Toast {
 }
 
 export function App() {
-  const { loading, groups, totalTabs, killerTabIds, selfTabId } = useTabs();
+  const { loading, groups, totalTabs } = useTabs();
   const { settings, update } = useSettings();
   const quote = useQuote(settings.showQuote);
 
-  const [bannerDismissed, setBannerDismissed] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [bombing, setBombing] = useState(false);
@@ -86,34 +85,25 @@ export function App() {
     if (settings.trashSound) playTrashSound();
     if (shouldDegrade(settings.cyberEffects)) {
       closeTabs(ids);
-      showToast(`Killed ${ids.length} page${ids.length > 1 ? "s" : ""}`);
+      showToast(trp("killed_n", lang, ids.length));
       return;
     }
     setBombing(true);
     setTimeout(() => {
       closeTabs(ids);
-      showToast(`Killed ${ids.length} page${ids.length > 1 ? "s" : ""}`);
+      showToast(trp("killed_n", lang, ids.length));
     }, 600);
     setTimeout(() => setBombing(false), 1200);
   };
 
   const handleClose = (count: number) => {
-    showToast(`Killed ${count} page${count > 1 ? "s" : ""}`);
-  };
-
-  const handleCloseExtras = () => {
-    const extras = killerTabIds.filter((id) => id !== selfTabId);
-    if (!extras.length) return;
-    if (settings.trashSound) playTrashSound();
-    closeTabs(extras);
+    showToast(trp("killed_n", lang, count));
   };
 
   const handleClearSaved = () => {
     clearSaved();
   };
 
-  const domainCount = groups.length;
-  const showBanner = killerTabIds.length >= 2 && !bannerDismissed;
   const lang = settings.language;
 
   // 接管开关关闭态：不渲染主界面
@@ -135,9 +125,12 @@ export function App() {
     );
   }
 
-  const openTabsTitle = lang === "en" ? "Open pages" : "当前打开";
-  const domainsCountCopy = `${domainCount} domain${domainCount > 1 ? "s" : ""}`;
-  const closeAllCopy = `Kill All`;
+  const openTabsTitle = tr("open_tabs", lang);
+  const domainCount = groups.length;
+  const domainsCountCopy = lang === "zh"
+    ? `${domainCount} 个域名`
+    : `${domainCount} domain${domainCount > 1 ? "s" : ""}`;
+  const closeAllCopy = tr("kill_all", lang);
 
   return (
     <>
@@ -146,12 +139,6 @@ export function App() {
         <Header
           lang={lang}
           quote={settings.showQuote ? quote : null}
-          banner={showBanner ? {
-            count: killerTabIds.length,
-            onKillExtras: handleCloseExtras,
-            onDismiss: () => setBannerDismissed(true),
-            lang,
-          } : null}
         />
 
         <section className="section section--primary">

@@ -6,7 +6,7 @@ import {
   normalizedUrl,
   type TabGroup,
 } from "../domain";
-import type { Lang } from "../i18n";
+import { tr, trp, type Lang } from "../i18n";
 import { shouldDegrade, CardFirework, type FireworkOrigin } from "./CyberEffects";
 import { playTrashSound } from "../sound";
 
@@ -107,6 +107,8 @@ function TabItem({ row, fallbackColor, fallbackLetter, onSave, onClose, trashSou
     e.stopPropagation();
     onSave(tab);
   };
+  const saveLabel = lang === "en" ? "Save for later" : "稍后再看";
+  const closeLabel = lang === "en" ? "Close tab" : "关闭标签页";
   return (
     <li className="tab-item" onClick={() => activateTab(tab)}>
       <Favicon
@@ -124,8 +126,8 @@ function TabItem({ row, fallbackColor, fallbackLetter, onSave, onClose, trashSou
       <button
         type="button"
         className="tab-item__btn tab-item__save"
-        aria-label={lang === "en" ? "Save for later" : "稍后再看"}
-        title={lang === "en" ? "Save for later" : "稍后再看"}
+        aria-label={saveLabel}
+        title={saveLabel}
         onClick={handleSave}
       >
         +
@@ -133,7 +135,7 @@ function TabItem({ row, fallbackColor, fallbackLetter, onSave, onClose, trashSou
       <button
         type="button"
         className="tab-item__btn tab-item__close"
-        aria-label={lang === "en" ? "Close tab" : "关闭 tab"}
+        aria-label={closeLabel}
         onClick={handleClose}
       >
         ×
@@ -188,10 +190,23 @@ function DomainCard({ group, onSave, onClose, cyberEnabled, trashSound, lang }: 
     }, 420);
   };
 
-  const handleCloseDuplicates = () => {
-    const dupIds = rows
-      .filter((r) => r.multiplicity > 1)
-      .flatMap((r) => r.tabIds.slice(1));
+  const handleCloseDuplicates = async () => {
+    const dupRows = rows.filter((r) => r.multiplicity > 1);
+    if (!dupRows.length) return;
+
+    let selfId: number | undefined;
+    try {
+      const cur = await chrome.tabs.getCurrent();
+      selfId = cur?.id;
+    } catch { /* ignore */ }
+
+    const dupIds: number[] = [];
+    for (const row of dupRows) {
+      const ids = row.tabIds;
+      const keepId = selfId != null && ids.includes(selfId) ? selfId : ids[0];
+      dupIds.push(...ids.filter((id) => id !== keepId));
+    }
+
     if (!dupIds.length) return;
     if (trashSound) playTrashSound();
     closeTabs(dupIds);
@@ -208,9 +223,9 @@ function DomainCard({ group, onSave, onClose, cyberEnabled, trashSound, lang }: 
   const displayName = hostDisplayName(group.hostname, friendly);
 
   const count = group.tabs.length;
-  const countLabel = `${count} page${count > 1 ? "s" : ""}`;
-  const closeAllLabel = `Kill ${count} page${count > 1 ? "s" : ""}`;
-  const closeDupLabel = `Kill ${dupExtraCount} dupe${dupExtraCount > 1 ? "s" : ""}`;
+  const countLabel = trp("n_pages", lang, count);
+  const closeAllLabel = trp("kill_n_pages", lang, count);
+  const closeDupLabel = trp("kill_n_dupes", lang, dupExtraCount);
 
   // 取第一个有 favicon 的 tab
   const domainFavicon = group.tabs.find(t => t.favIconUrl)?.favIconUrl;
@@ -239,7 +254,7 @@ function DomainCard({ group, onSave, onClose, cyberEnabled, trashSound, lang }: 
             {countLabel}
           </span>
         )}
-        {hasDups && <span className="card__dup-pill">{dupExtraCount} dupe{dupExtraCount > 1 ? "s" : ""}</span>}
+        {hasDups && <span className="card__dup-pill">{trp("n_dupes", lang, dupExtraCount)}</span>}
       </header>
 
       <ul className="card__list">
@@ -259,12 +274,12 @@ function DomainCard({ group, onSave, onClose, cyberEnabled, trashSound, lang }: 
 
       {hidden > 0 && (
         <button type="button" className="tab-more" onClick={() => setExpanded(true)}>
-          Show {hidden} more
+          {trp("show_n_more", lang, hidden)}
         </button>
       )}
       {expanded && rows.length > COLLAPSED_LIMIT && (
         <button type="button" className="tab-more" onClick={() => setExpanded(false)}>
-          Less
+          {tr("less", lang)}
         </button>
       )}
 

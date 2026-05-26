@@ -179,7 +179,7 @@ export function hostDisplayName(hostname: string, friendly: string | null): stri
 export function normalizedUrl(tab: chrome.tabs.Tab): string | null {
   const raw = tab.url || tab.pendingUrl;
   if (!raw) return null;
-  if (!/^https?:/i.test(raw) && !/^chrome:/i.test(raw) && !/^file:/i.test(raw)) {
+  if (!/^https?:/i.test(raw) && !/^chrome:/i.test(raw) && !/^chrome-extension:/i.test(raw) && !/^file:/i.test(raw)) {
     return null;
   }
   const hashIdx = raw.indexOf("#");
@@ -191,8 +191,6 @@ export function groupTabs(tabs: chrome.tabs.Tab[]): TabGroup[] {
   const sampleHost = new Map<string, string>();
 
   for (const tab of tabs) {
-    // Killer 自身的 newtab 不作为 domain 卡片显示：多 Killer 已由顶部横幅提醒，避免重复功能
-    if (isOwnNewTab(tab)) continue;
     const host = hostnameOf(tab.url || tab.pendingUrl);
     const key = host ? groupKey(host) : "local";
     if (!buckets.has(key)) {

@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useSaved } from "../useSaved";
 import { clearSaved, relativeTime, removeSaved, type SavedItem } from "../saved";
 import { hostnameOf, colorFor, letterFor } from "../domain";
-import type { Lang } from "../i18n";
+import { tr, trp, type Lang } from "../i18n";
 import { playTrashSound } from "../sound";
 import { CardFirework, shouldDegrade, type FireworkOrigin } from "./CyberEffects";
 
@@ -124,12 +124,9 @@ export function SavedSection({ lang, cyberEnabled, trashSound }: Props) {
 
   if (loading) return null;
 
-  const title = lang === "en" ? "Saved for later" : "稍后再看";
-  const items = `${saved.length} item${saved.length > 1 ? "s" : ""}`;
-  const emptyCopy =
-    lang === "en"
-      ? "Pages saved for later will rest here."
-      : "这里会安放你想稍后再看的网页。";
+  const title = tr("saved", lang);
+  const items = trp("n_items", lang, saved.length);
+  const emptyCopy = tr("empty_saved", lang);
 
   return (
     <section className="section section--saved">
@@ -145,7 +142,7 @@ export function SavedSection({ lang, cyberEnabled, trashSound }: Props) {
               className="btn-pill btn-pill--danger"
               onClick={handleClearAll}
             >
-              Kill All
+              {tr("kill_all", lang)}
             </button>
           </div>
         )}
